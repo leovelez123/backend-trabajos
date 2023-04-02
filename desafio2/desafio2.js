@@ -103,6 +103,7 @@ class ProductManager {
   }
 }
 
+export default ProductManager;
 
 const product1 = {
   title: "producto prueba",
