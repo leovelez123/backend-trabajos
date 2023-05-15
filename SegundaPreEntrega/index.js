@@ -1,16 +1,25 @@
-const express = require("express");
-const productsRouter = require("./routes/products");
-const cartRouter = require("./routes/cart");
+import dotenv from "dotenv";
+dotenv.config();
 
-const app = express();
-const PORT = 3000;
+import express from 'express';
+import productsRouter from "./src/Routes/products";
+import mongoose from "mongoose";
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+void (async() =>
+{
+    await mongoose.connect(process.env.MONGO_DB_URI, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+      });
 
-app.use("/products", productsRouter);
-app.use("/cart", cartRouter);
+    const app = express();
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+    app.use(express.json());
+    app.use(express.urlencoded({ extended: true }));
+
+    app.use('/api/students', productsRouter);
+
+    app.listen(8081, () => {
+      console.log('Server listening on port 8081');
+    });
+})();
